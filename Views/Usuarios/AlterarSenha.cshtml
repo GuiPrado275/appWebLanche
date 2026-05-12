@@ -1,0 +1,80 @@
+@model AlterarSenhaViewModel
+@{
+    ViewData["Title"] = "Minha Conta - São Judas Lanches";
+    var abaAtiva = ViewBag.Aba as string ?? "senha";
+}
+
+<div class="container py-4" style="max-width: 560px;">
+    <div class="page-header">
+        <h2>Minha Conta</h2>
+    </div>
+
+    @* Abas de gerenciar a conta *@
+    <ul class="nav nav-tabs mt-4">
+        <li class="nav-item">
+            <a class="nav-link @(abaAtiva == "senha" ? "active" : "")"
+               href="?aba=senha">Alterar Senha</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link @(abaAtiva == "conta" ? "active" : "")"
+               href="?aba=conta">Configurações de Conta</a>
+        </li>
+    </ul>
+
+    <div class="form-card" style="border-top-left-radius:0; border-top-right-radius:0;">
+
+        @if (abaAtiva == "senha")
+        {
+            @if (ViewBag.Erro != null)
+            {
+                <div class="alert alert-danger">@ViewBag.Erro</div>
+            }
+            @if (ViewBag.Sucesso != null)
+            {
+                <div class="alert alert-success">@ViewBag.Sucesso</div>
+            }
+
+            <form method="post" asp-controller="Usuarios" asp-action="AlterarSenha" onsubmit="return validarNovaSenha()">
+                <div class="mb-3">
+                    <label class="form-label">Senha Atual</label>
+                    <input asp-for="SenhaAtual" type="password" class="form-control" placeholder="••••••••" required />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Nova Senha</label>
+                    <input asp-for="NovaSenha" id="novaSenha" type="password" class="form-control" placeholder="Mínimo 6 caracteres" required />
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label">Confirmar Nova Senha</label>
+                    <input asp-for="ConfirmarSenha" id="confirmarNovaSenha" type="password" class="form-control" placeholder="Repita a nova senha" required />
+                    <div id="senhaErro" class="text-danger mt-1" style="display:none;">As senhas não coincidem.</div>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 rounded-pill">Alterar Senha</button>
+            </form>
+        }
+
+        @if (abaAtiva == "conta")
+        {
+            @if (ViewBag.ErroContas != null)
+            {
+                <div class="alert alert-danger">@ViewBag.ErroContas</div>
+            }
+
+            <h6 class="fw-bold mb-1">Apagar minha conta</h6>
+            <p class="text-muted" style="font-size:0.875rem;">
+                Ao apagar sua conta todos os seus dados serão removidos permanentemente. Esta ação não pode ser desfeita.
+            </p>
+
+            <div class="danger-zone mt-3">
+                <form method="post" asp-controller="Usuarios" asp-action="ApagarPropriaConta"
+                      onsubmit="return confirm('Tem certeza que deseja apagar sua conta? Esta ação é irreversível. ' +
+                       'SE VOCÊ FOR UM ADM A CONTA NÃO SERÁ APAGADA E VOCÊ IRÁ SER REDIRECIONADO PARA A PAGINA INICIAL')">
+                    <button type="submit" class="btn btn-danger rounded-pill">Apagar minha conta</button>
+                </form>
+            </div>
+        }
+
+    </div>
+</div>

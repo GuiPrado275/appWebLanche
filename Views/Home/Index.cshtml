@@ -1,0 +1,55 @@
+@{
+    ViewData["Title"] = "Início - São Judas Lanches";
+    var nome = Context.Session.GetString("NomeUsuario");
+    var perfil = Context.Session.GetString("PerfilUsuario");
+}
+
+<div class="container py-5">
+    <div class="home-hero text-center">
+        <div class="hero-icon">
+            <img src="/images/logo-saojudas.png" alt="São Judas Lanches" class="hero-logo-img" />
+        </div>
+        <h1 class="hero-title">São Judas Lanches</h1>
+        <p class="hero-sub">O melhor lanche da região, com muito sabor e qualidade!</p>
+
+        @if (perfil == "Cliente")
+        {
+            <a asp-controller="Pedidos" asp-action="Registrar" class="btn btn-primary rounded-pill px-5 mt-4" style="font-size:1rem; padding-top:.75rem; padding-bottom:.75rem;">
+                Fazer Pedido agora →
+            </a>
+        }
+    </div>
+
+    <div class="row justify-content-center mt-5 g-4">
+        <div class="col-md-4">
+            <div class="info-card">
+                <div class="info-icon">🕐</div>
+                <h5>Horário de Funcionamento</h5>
+                <p>Segunda a Sexta: 11h às 22h<br/>Sábado e Domingo: 11h às 23h</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="info-card">
+                <div class="info-icon">📍</div>
+                <h5>Localização</h5>
+                <p>Rua São Judas Tadeu, 123<br/>Centro — São José do Rio Preto/SP</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="info-card">
+                <div class="info-icon">📞</div>
+                <h5>Contato</h5>
+                <p>(17) 99999-0000<br/>saojudaslanches@email.com</p>
+            </div>
+        </div>
+    </div>
+
+    @if (perfil == "Admin")
+    {
+        <div class="text-center mt-5">
+            <a asp-controller="Usuarios" asp-action="Index" class="btn btn-primary rounded-pill px-4">
+                Gerenciar Usuários
+            </a>
+        </div>
+    }
+</div>

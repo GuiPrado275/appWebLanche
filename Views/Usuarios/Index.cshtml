@@ -1,0 +1,63 @@
+@model List<Usuario>
+@{
+    ViewData["Title"] = "Usuários - São Judas Lanches";
+    var idLogado = Context.Session.GetString("UsuarioId");
+}
+
+<div class="container py-4">
+    <div class="page-header">
+        <h2>👥 Gerenciar Usuários</h2>
+        <span class="badge bg-secondary ms-auto">@Model.Count usuário(s)</span>
+    </div>
+
+    @if (TempData["Erro"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Erro"]</div>
+    }
+
+    <div class="form-card p-0" style="overflow:hidden">
+        <table class="table table-hover align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>E-mail</th>
+                    <th>Perfil</th>
+                    <th class="text-center">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var usuario in Model)
+                {
+                    <tr>
+                        <td>
+                            <span style="font-weight:600">@usuario.Nome</span>
+                            @if (usuario.Id == idLogado)
+                            {
+                                <span class="badge ms-1" style="background:var(--brand)">Você</span>
+                            }
+                        </td>
+                        <td style="color:var(--ink-soft)">@usuario.Email</td>
+                        <td>
+                            <span class="badge @(usuario.Perfil == "Admin" ? "bg-danger" : usuario.Perfil == "Funcionario" ? "bg-warning text-dark" : "bg-success")">
+                                @usuario.Perfil
+                            </span>
+                        </td>
+                        <td class="text-center">
+                            <a asp-controller="Usuarios" asp-action="Editar" asp-route-id="@usuario.Id"
+                               class="btn btn-outline-secondary btn-sm">Editar</a>
+
+                            @if (usuario.Id != idLogado)
+                            {
+                                <form asp-controller="Usuarios" asp-action="Apagar" method="post" style="display:inline;"
+                                      onsubmit="return confirm('Tem certeza que deseja apagar @usuario.Nome?')">
+                                    <input type="hidden" name="id" value="@usuario.Id" />
+                                    <button type="submit" class="btn btn-danger btn-sm">Apagar</button>
+                                </form>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

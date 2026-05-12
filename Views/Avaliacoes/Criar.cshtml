@@ -1,0 +1,44 @@
+@model SaoJudasLanches.Web.Models.Avaliacao
+@{ ViewData["Title"] = "Avaliar Pedido"; }
+
+<div class="container py-4" style="max-width:500px">
+    <div class="page-header"><h2>⭐ Avaliar Pedido #@Model.PedidoId</h2></div>
+    <div class="form-card mt-4">
+        <form method="post" asp-action="Criar">
+            <input type="hidden" asp-for="PedidoId" />
+
+            <div class="mb-4">
+                <label class="form-label fw-bold">Sua nota</label>
+                <div class="estrelas-input" id="estrelas">
+                    @for (int i = 1; i <= 5; i++)
+                    {
+                        <span class="estrela" data-valor="@i" onclick="selecionarNota(@i)">★</span>
+                    }
+                </div>
+                <input type="hidden" asp-for="Nota" id="notaInput" required />
+                <small class="text-muted" id="notaLabel">Clique para avaliar</small>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label fw-bold">Comentário (opcional)</label>
+                <textarea asp-for="Comentario" class="form-control" rows="3"
+                          placeholder="Conte como foi seu pedido..."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 rounded-pill">Enviar Avaliação</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+function selecionarNota(valor) {
+    document.getElementById('notaInput').value = valor;
+    const labels = ['Péssimo', 'Ruim', 'Regular', 'Bom', 'Excelente!'];
+    document.getElementById('notaLabel').textContent = labels[valor - 1];
+    document.querySelectorAll('.estrela').forEach((e, i) => {
+        e.style.color = i < valor ? '#f59e0b' : '#d1d5db';
+    });
+}
+</script>
+}

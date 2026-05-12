@@ -1,0 +1,36 @@
+@model Usuario
+@{
+    Layout = "_AuthLayout";
+    ViewData["Title"] = "Login - São Judas Lanches";
+}
+
+<div class="auth-container">
+    <div class="auth-card">
+        <h2 class="auth-title">Bem-vindo de volta</h2>
+        <p class="auth-subtitle">Faça login para continuar</p>
+
+        @if (ViewBag.Erro != null)
+        {
+            <div class="alert alert-danger mb-3">@ViewBag.Erro</div>
+        }
+
+        <form method="post" asp-controller="Auth" asp-action="Login">
+            <div class="mb-3">
+                <label class="form-label">E-mail</label>
+                <input asp-for="Email" type="email" class="form-control" placeholder="seu@email.com" required />
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label">Senha</label>
+                <input asp-for="Senha" type="password" class="form-control" placeholder="••••••••" required />
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Entrar</button>
+        </form>
+
+        <p>
+            Não tem uma conta?
+            <a asp-controller="Auth" asp-action="Cadastro">Cadastre-se</a>
+        </p>
+    </div>
+</div>

@@ -1,0 +1,43 @@
+@model List<SaoJudasLanches.Web.Models.Endereco>
+@{ ViewData["Title"] = "Meus Endereços"; }
+
+<div class="container py-4">
+    <div class="page-header">
+        <h2>📍 Meus Endereços</h2>
+        <a asp-action="Criar" class="btn btn-primary btn-sm ms-auto">+ Novo Endereço</a>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="form-card text-center py-5" style="color:var(--ink-soft)">
+            <div style="font-size:2.5rem;margin-bottom:.75rem">📍</div>
+            <p class="mb-3">Nenhum endereço cadastrado ainda.</p>
+            <a asp-action="Criar" class="btn btn-primary">Adicionar endereço</a>
+        </div>
+    }
+
+    <div class="row g-3 mt-1">
+        @foreach (var end in Model)
+        {
+            <div class="col-md-6">
+                <div class="form-card h-100 @(end.Principal ? "borda-primary" : "")">
+                    @if (end.Principal)
+                    {
+                        <span class="badge mb-2" style="background:var(--brand)">⭐ Principal</span>
+                    }
+                    <p class="mb-1"><strong>@end.Rua, @end.Numero</strong> @end.Complemento</p>
+                    <p class="mb-1" style="color:var(--ink-soft);font-size:.88rem">@end.Bairro — @end.Cidade/@end.Estado</p>
+                    <p class="mb-3" style="color:var(--ink-soft);font-size:.85rem">CEP: @end.Cep</p>
+                    <div class="d-flex gap-2">
+                        <a asp-action="Editar" asp-route-id="@end.Id" class="btn btn-outline-secondary btn-sm">Editar</a>
+                        <form asp-action="Apagar" method="post" style="display:inline"
+                              onsubmit="return confirm('Remover este endereço?')">
+                            <input type="hidden" name="id" value="@end.Id" />
+                            <button class="btn btn-danger btn-sm">Remover</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

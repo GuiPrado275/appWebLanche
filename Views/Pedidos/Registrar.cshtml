@@ -1,0 +1,151 @@
+@model SaoJudasLanches.Web.Models.RegistrarPedidoViewModel
+@{
+    ViewData["Title"] = "Fazer Pedido";
+    var categorias = Model.Cardapio.Select(i => i.Categoria).Distinct().OrderBy(c => c).ToList();
+    var icones = new Dictionary<string, string>
+    {
+        ["Acompanhamento"]       = "🍟",
+        ["Bebida"]               = "🥤",
+        ["Lanche"]               = "🍔",
+        ["Sobremesa"]            = "🍰",
+        ["Lanches Tradicionais"] = "🍔",
+        ["Hot Dog / Sanduíches"] = "🌭",
+        ["Lanches de Frango"]    = "🍗",
+        ["Filé Mignon"]          = "🥩",
+        ["Calabresa"]            = "🌶️",
+        ["Pastéis"]              = "🥟",
+        ["Porções"]              = "🍟",
+        ["Pizzas"]               = "🍕",
+        ["Espetos"]              = "🍢",
+    };
+}
+
+<div class="container py-4">
+    <div class="page-header">
+        <h2>🛒 Fazer Pedido</h2>
+    </div>
+
+    <form method="post" asp-action="Registrar" id="formPedido">
+        <div class="row g-4 mt-1">
+
+            <!-- Coluna esquerda: itens -->
+            <div class="col-lg-8">
+                <div class="registrar-card">
+                    @foreach (var cat in categorias)
+                    {
+                        <div class="registrar-cat-header">
+                            <span>@(icones.ContainsKey(cat) ? icones[cat] : "🍽️")</span>
+                            <span>@cat</span>
+                        </div>
+                        @foreach (var item in Model.Cardapio.Where(i => i.Categoria == cat))
+                        {
+                            <div class="pedido-item-row">
+                                <div class="pedido-item-info">
+                                    <strong>@item.Nome</strong>
+                                    @if (!string.IsNullOrEmpty(item.Descricao))
+                                    {
+                                        <small class="d-block">@item.Descricao</small>
+                                    }
+                                    <span class="preco-item">R$ @item.Preco.ToString("F2")</span>
+                                </div>
+                                <div class="qty-control">
+                                    <button type="button" class="btn-qty" onclick="alterarQty(@item.Id, -1)">−</button>
+                                    <input type="number" id="qty_@item.Id" name="quantidades[@item.Id]"
+                                           value="0" min="0" max="@item.EstoqueAtual"
+                                           class="qty-input" onchange="calcularTotal()" />
+                                    <button type="button" class="btn-qty" onclick="alterarQty(@item.Id, 1)">+</button>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+
+            <!-- Coluna direita: resumo -->
+            <div class="col-lg-4">
+                <div class="resumo-card">
+                    <h5>🧾 Resumo</h5>
+
+                    <div id="resumoItens">
+                        <span class="resumo-vazio">Nenhum item selecionado.</span>
+                    </div>
+
+                    <div class="resumo-total">
+                        <span>Total</span>
+                        <span class="resumo-total-valor" id="totalPedido">R$ 0,00</span>
+                    </div>
+
+                    <div class="resumo-section">
+                        <label class="resumo-label">📍 Endereço de entrega</label>
+                        <select name="enderecoId" class="form-select form-select-sm">
+                            <option value="">Retirar no local</option>
+                            @foreach (var end in Model.Enderecos)
+                            {
+                                <option value="@end.Id">@end.Rua, @end.Numero — @end.Bairro</option>
+                            }
+                        </select>
+                        @if (!Model.Enderecos.Any())
+                        {
+                            <a asp-controller="Enderecos" asp-action="Criar"
+                               class="d-block mt-1" style="font-size:0.82rem; color:var(--primary)">
+                                + Cadastrar endereço
+                            </a>
+                        }
+                    </div>
+
+                    <div class="resumo-section">
+                        <label class="resumo-label">📝 Observações</label>
+                        <textarea name="observacoes" class="form-control form-control-sm"
+                                  rows="3" maxlength="300"
+                                  placeholder="Ex: sem cebola, sem tomate, ponto da carne..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 rounded-pill mt-3 btn-confirmar">
+                        Confirmar Pedido →
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+<script>
+const precos = {
+    @foreach (var item in Model.Cardapio) {
+        @:@item.Id: @item.Preco.ToString("F2", System.Globalization.CultureInfo.InvariantCulture),
+    }
+};
+const nomes = {
+    @foreach (var item in Model.Cardapio) {
+        @:@item.Id: "@item.Nome",
+    }
+};
+
+function alterarQty(id, delta) {
+    const input = document.getElementById('qty_' + id);
+    const max = parseInt(input.max) || 9999;
+    const novoVal = Math.min(max, Math.max(0, parseInt(input.value || 0) + delta));
+    input.value = novoVal;
+    calcularTotal();
+}
+
+function calcularTotal() {
+    let total = 0;
+    let linhas = [];
+    for (const id in precos) {
+        const input = document.getElementById('qty_' + id);
+        const qty = parseInt(input ? input.value : 0) || 0;
+        if (qty > 0) {
+            const sub = qty * precos[id];
+            total += sub;
+            linhas.push(`<div class="resumo-linha"><span>${qty}× ${nomes[id]}</span><span>R$ ${sub.toFixed(2).replace('.', ',')}</span></div>`);
+        }
+    }
+    document.getElementById('totalPedido').textContent = 'R$ ' + total.toFixed(2).replace('.', ',');
+    document.getElementById('resumoItens').innerHTML = linhas.length
+        ? linhas.join('')
+        : '<span class="resumo-vazio">Nenhum item selecionado.</span>';
+}
+</script>
+}
