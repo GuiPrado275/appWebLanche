@@ -1,0 +1,139 @@
+@model List<SaoJudasLanches.Web.Models.ItemCardapio>
+@{
+    ViewData["Title"] = "Cardápio - São Judas Lanches";
+    var perfil = Context.Session.GetString("PerfilUsuario");
+    var categorias = Model.Select(i => i.Categoria).Distinct().OrderBy(c => c).ToList();
+
+    var icones = new Dictionary<string, string>
+    {
+        ["Acompanhamento"]       = "🍟",
+        ["Bebida"]               = "🥤",
+        ["Lanche"]               = "🍔",
+        ["Sobremesa"]            = "🍰",
+        ["Lanches Tradicionais"] = "🍔",
+        ["Hot Dog / Sanduíches"] = "🌭",
+        ["Lanches de Frango"]    = "🍗",
+        ["Filé Mignon"]          = "🥩",
+        ["Calabresa"]            = "🌶️",
+        ["Pastéis"]              = "🥟",
+        ["Porções"]              = "🍟",
+        ["Pizzas"]               = "🍕",
+        ["Espetos"]              = "🍢",
+    };
+}
+
+<div class="container py-4">
+    <div class="page-header mb-0">
+        <h2>🍽️ Cardápio</h2>
+        @if (perfil == "Admin")
+        {
+            <a asp-action="Criar" class="btn btn-primary rounded-pill btn-sm ms-auto">+ Novo Item</a>
+        }
+    </div>
+
+    <div class="cardapio-filtros">
+        <button class="filtro-btn ativo" onclick="filtrarCategoria(this, '')">Todos</button>
+        @foreach (var cat in categorias)
+        {
+            <button class="filtro-btn" onclick="filtrarCategoria(this, '@cat')">
+                @(icones.ContainsKey(cat) ? icones[cat] : "") @cat
+            </button>
+        }
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="text-center py-5 text-muted">Nenhum item no cardápio ainda.</div>
+    }
+
+    @foreach (var cat in categorias)
+    {
+        var itensCat = Model.Where(i => i.Categoria == cat).ToList();
+        <div class="categoria-section" data-categoria="@cat">
+            <div class="categoria-header">
+                <span class="cat-emoji">@(icones.ContainsKey(cat) ? icones[cat] : "🍽️")</span>
+                <h5 class="categoria-titulo">@cat</h5>
+                <div class="categoria-linha"></div>
+                <span class="cat-count">@itensCat.Count itens</span>
+            </div>
+
+            <div class="row g-3">
+                @foreach (var item in itensCat)
+                {
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <div class="cardapio-card @(!item.Disponivel ? "indisponivel" : "") @(item.Disponivel && perfil != "Admin" && perfil != "Funcionario" ? "cardapio-card-clicavel" : "")"
+                             @if (item.Disponivel && perfil != "Admin" && perfil != "Funcionario")
+                             {
+                                 <text>onclick="window.location.href='@Url.Action("Registrar", "Pedidos")'" style="cursor:pointer;"</text>
+                             }>
+                            <div class="card-emoji-bg">@(icones.ContainsKey(cat) ? icones[cat] : "🍽️")</div>
+                            <div class="card-body-inner">
+                                <h6>@item.Nome</h6>
+                                @if (!string.IsNullOrEmpty(item.Descricao))
+                                {
+                                    <p>@item.Descricao</p>
+                                }
+                            </div>
+                            <div class="cardapio-footer">
+                                <span class="preco">R$ @item.Preco.ToString("F2")</span>
+                                @if (!item.Disponivel)
+                                {
+                                    <span class="badge bg-secondary" style="font-size:0.7rem">Indisponível</span>
+                                }
+                                else if (perfil == "Admin" || perfil == "Funcionario")
+                                {
+                                    <span class="badge estoque-badge">Estq: @item.EstoqueAtual</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-success" style="font-size:0.7rem">Pedir →</span>
+                                }
+                            </div>
+
+                            @if (perfil == "Admin")
+                            {
+                                <div class="cardapio-acoes">
+                                    <a asp-action="Editar" asp-route-id="@item.Id"
+                                       class="btn btn-outline-secondary btn-sm rounded-pill" style="font-size:0.78rem">Editar</a>
+                                    <form asp-action="Apagar" method="post" style="display:inline"
+                                          onsubmit="return confirm('Remover @item.Nome do cardápio?')">
+                                        <input type="hidden" name="id" value="@item.Id" />
+                                        <button class="btn btn-danger btn-sm rounded-pill" style="font-size:0.78rem">Remover</button>
+                                    </form>
+                                    <form asp-action="AtualizarEstoque" method="post" class="d-flex gap-1 align-items-center w-100 mt-1">
+                                        <input type="hidden" name="id" value="@item.Id" />
+                                        <input type="number" name="quantidade" value="@item.EstoqueAtual" min="0"
+                                               class="form-control form-control-sm" style="width:60px;font-size:0.8rem" />
+                                        <button class="btn btn-outline-primary btn-sm rounded-pill flex-grow-1" style="font-size:0.78rem">Estoque</button>
+                                    </form>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+<style>
+    .cardapio-card-clicavel:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .cardapio-card-clicavel {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+</style>
+<script>
+function filtrarCategoria(btn, categoria) {
+    document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('ativo'));
+    btn.classList.add('ativo');
+    document.querySelectorAll('.categoria-section').forEach(sec => {
+        sec.style.display = (!categoria || sec.dataset.categoria === categoria) ? '' : 'none';
+    });
+}
+</script>
+}

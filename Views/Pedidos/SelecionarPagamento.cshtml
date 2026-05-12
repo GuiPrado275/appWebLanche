@@ -1,0 +1,59 @@
+@model SaoJudasLanches.Web.Models.PagamentoViewModel
+@{ ViewData["Title"] = "Pagamento"; }
+
+<div class="container py-4" style="max-width:500px">
+    <div class="page-header"><h2>💳 Pagamento</h2></div>
+
+    <div class="form-card mt-4">
+        <div class="pagamento-total-box">
+            <span class="pagamento-total-label">Total do pedido</span>
+            <span class="pagamento-total-valor">R$ @Model.Total.ToString("F2")</span>
+        </div>
+
+        <form method="post" asp-action="ProcessarPagamento">
+            <input type="hidden" asp-for="PedidoId" />
+            <input type="hidden" asp-for="Total" />
+
+            <p class="pagamento-instrucao">Escolha como deseja pagar:</p>
+
+            <div class="pagamento-opcoes">
+                <label class="pagamento-opcao">
+                    <input type="radio" name="MetodoPagamento" value="Pix" required />
+                    <span class="pagamento-icone">💠</span>
+                    <div>
+                        <strong>Pix</strong>
+                        <small class="d-block text-muted">Aprovação imediata</small>
+                    </div>
+                </label>
+                <label class="pagamento-opcao">
+                    <input type="radio" name="MetodoPagamento" value="Cartão Crédito" />
+                    <span class="pagamento-icone">💳</span>
+                    <div>
+                        <strong>Cartão de Crédito</strong>
+                        <small class="d-block text-muted">À vista ou parcelado</small>
+                    </div>
+                </label>
+                <label class="pagamento-opcao">
+                    <input type="radio" name="MetodoPagamento" value="Cartão Débito" />
+                    <span class="pagamento-icone">💳</span>
+                    <div>
+                        <strong>Cartão de Débito</strong>
+                        <small class="d-block text-muted">Débito na hora</small>
+                    </div>
+                </label>
+                <label class="pagamento-opcao">
+                    <input type="radio" name="MetodoPagamento" value="Dinheiro" />
+                    <span class="pagamento-icone">💵</span>
+                    <div>
+                        <strong>Dinheiro</strong>
+                        <small class="d-block text-muted">Pague na entrega</small>
+                    </div>
+                </label>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 rounded-pill mt-4 btn-confirmar">
+                Confirmar Pagamento
+            </button>
+        </form>
+    </div>
+</div>

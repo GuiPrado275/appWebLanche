@@ -1,0 +1,109 @@
+@model SaoJudasLanches.Web.Models.Pedido
+@{
+    ViewData["Title"] = "Pedido #" + Model.Id;
+    var statusOrdem = new[] { "Aguardando", "Preparando", "Saiu para entrega", "Entregue" };
+    var statusAtual = Array.IndexOf(statusOrdem, Model.Status);
+    var perfil = Context.Session.GetString("PerfilUsuario");
+}
+
+<div class="container py-4" style="max-width:620px">
+    <div class="page-header">
+        <h2>📦 Pedido #@Model.Id</h2>
+        <span class="badge status-badge-@Model.Status.Replace(" ", "")">@Model.Status</span>
+    </div>
+
+    <!-- Tracker -->
+    @if (Model.Status != "Cancelado")
+    {
+        <div class="status-tracker mt-4">
+            @for (int i = 0; i < statusOrdem.Length; i++)
+            {
+                <div class="status-step @(i <= statusAtual ? "ativo" : "") @(i == statusAtual ? "atual" : "")">
+                    <div class="status-bolinha">@(i < statusAtual ? "✓" : (i + 1).ToString())</div>
+                    <small>@statusOrdem[i]</small>
+                </div>
+                @if (i < statusOrdem.Length - 1)
+                {
+                    <div class="status-linha @(i < statusAtual ? "ativo" : "")"></div>
+                }
+            }
+        </div>
+    }
+
+    <!-- Detalhes -->
+    <div class="acompanhar-grid mt-4">
+
+        <!-- Info do pedido -->
+        <div class="acomp-bloco">
+            <div class="acomp-bloco-titulo">📋 Informações</div>
+            <div class="acomp-row">
+                <span class="acomp-label">Data</span>
+                <span>@Model.DataPedido.ToString("dd/MM/yyyy HH:mm")</span>
+            </div>
+            <div class="acomp-row">
+                <span class="acomp-label">Pagamento</span>
+                <span>
+                    @if (!string.IsNullOrEmpty(Model.MetodoPagamento))
+                    {
+                        @Model.MetodoPagamento
+                        <span class="badge @(Model.StatusPagamento == "Aprovado" ? "bg-success" : "bg-warning text-dark") ms-1" style="font-size:0.7rem">@Model.StatusPagamento</span>
+                    }
+                    else
+                    {
+                        <span class="text-muted">Aguardando</span>
+                    }
+                </span>
+            </div>
+            <div class="acomp-row">
+                <span class="acomp-label">Entrega</span>
+                <span>
+                    @if (Model.Endereco != null)
+                    {
+                        @($"{Model.Endereco.Rua}, {Model.Endereco.Numero} — {Model.Endereco.Bairro}")
+                    }
+                    else
+                    {
+                        <span>Retirada no local</span>
+                    }
+                </span>
+            </div>
+            @if (!string.IsNullOrWhiteSpace(Model.Observacoes))
+            {
+                <div class="acomp-row">
+                    <span class="acomp-label">Observações</span>
+                    <span>@Model.Observacoes</span>
+                </div>
+            }
+        </div>
+
+        <!-- Itens -->
+        <div class="acomp-bloco">
+            <div class="acomp-bloco-titulo">🛒 Itens do Pedido</div>
+            @foreach (var item in Model.Itens)
+            {
+                <div class="acomp-row">
+                    <span>@item.Quantidade× @item.ItemCardapio?.Nome</span>
+                    <span style="color:var(--primary); font-weight:600">R$ @item.Subtotal.ToString("F2")</span>
+                </div>
+            }
+            <div class="acomp-row acomp-total">
+                <span>Total</span>
+                <span>R$ @Model.Total.ToString("F2")</span>
+            </div>
+        </div>
+    </div>
+
+    @if (Model.Status == "Entregue")
+    {
+        <div class="text-center mt-3">
+            <a asp-controller="Avaliacoes" asp-action="Criar" asp-route-pedidoId="@Model.Id"
+               class="btn btn-outline-primary rounded-pill">⭐ Avaliar este pedido</a>
+        </div>
+    }
+
+    <div class="text-center mt-3">
+        <a asp-action="Index" class="btn btn-outline-secondary rounded-pill">
+            ← @(perfil == "Admin" || perfil == "Funcionario" ? "Pedidos dos Clientes" : "Meus Pedidos")
+        </a>
+    </div>
+</div>

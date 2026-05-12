@@ -1,0 +1,70 @@
+@model List<SaoJudasLanches.Web.Models.Avaliacao>
+@{
+    ViewData["Title"] = "Avaliações";
+    var perfil = Context.Session.GetString("PerfilUsuario");
+}
+
+<div class="container py-4">
+    <div class="page-header">
+        <h2>⭐ Avaliações</h2>
+        <span class="badge bg-secondary ms-auto">@Model.Count avaliação(ões)</span>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="form-card text-center py-5" style="color:var(--ink-soft)">
+            <div style="font-size:2.5rem;margin-bottom:.75rem">⭐</div>
+            <p>Nenhuma avaliação ainda.</p>
+        </div>
+    }
+
+    <div class="mt-2">
+        @foreach (var av in Model)
+        {
+            <div class="form-card mb-3">
+                <div class="d-flex justify-content-between align-items-start gap-3">
+                    <div style="flex:1">
+
+                        <!-- Cabeçalho: nome + data -->
+                        <div class="d-flex align-items-center gap-2 flex-wrap">
+                            <span style="font-weight:700;font-size:.95rem">@av.Usuario?.Nome</span>
+                            <span style="color:var(--ink-soft);font-size:.82rem">— @av.DataAvaliacao.ToString("dd/MM/yyyy")</span>
+                        </div>
+
+                        <!-- Estrelas -->
+                        <div class="mt-2 mb-2">
+                            @for (int i = 1; i <= 5; i++)
+                            {
+                                <span style="color:@(i <= av.Nota ? "#F59E0B" : "var(--border)");font-size:1.25rem">★</span>
+                            }
+                            <span style="font-size:.82rem;color:var(--ink-soft);margin-left:.3rem">(@av.Nota/5)</span>
+                        </div>
+
+                        <!-- Itens do pedido -->
+                        @if (av.Pedido?.Itens != null && av.Pedido.Itens.Any())
+                        {
+                            <div style="font-size:.82rem;color:var(--ink-soft);margin-bottom:.4rem">
+                                @string.Join(", ", av.Pedido.Itens.Select(i => $"{i.Quantidade}× {i.ItemCardapio?.Nome}"))
+                            </div>
+                        }
+
+                        <!-- Comentário -->
+                        @if (!string.IsNullOrEmpty(av.Comentario))
+                        {
+                            <p class="mt-1 mb-0" style="font-size:.9rem;color:var(--ink-mid);font-style:italic">"@av.Comentario"</p>
+                        }
+                    </div>
+
+                    @if (perfil == "Admin")
+                    {
+                        <form asp-action="Apagar" method="post"
+                              onsubmit="return confirm('Remover esta avaliação?')">
+                            <input type="hidden" name="id" value="@av.Id" />
+                            <button class="btn btn-danger btn-sm">Remover</button>
+                        </form>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>

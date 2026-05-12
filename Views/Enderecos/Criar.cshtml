@@ -1,0 +1,48 @@
+@model SaoJudasLanches.Web.Models.Endereco
+@{ ViewData["Title"] = "Novo Endereço"; }
+
+<div class="container py-4" style="max-width:520px">
+    <div class="page-header"><h2>Novo Endereço</h2></div>
+    <div class="form-card mt-4">
+        <form method="post" asp-action="Criar">
+            <div class="row g-3">
+                <div class="col-8">
+                    <label class="form-label">Rua</label>
+                    <input asp-for="Rua" class="form-control" required />
+                </div>
+                <div class="col-4">
+                    <label class="form-label">Número</label>
+                    <input asp-for="Numero" class="form-control" required />
+                </div>
+                <div class="col-12">
+                    <label class="form-label">Complemento</label>
+                    <input asp-for="Complemento" class="form-control" placeholder="Apto, Bloco..." />
+                </div>
+                <div class="col-12">
+                    <label class="form-label">Bairro</label>
+                    <input asp-for="Bairro" class="form-control" required />
+                </div>
+                <div class="col-8">
+                    <label class="form-label">Cidade</label>
+                    <input asp-for="Cidade" class="form-control" required />
+                </div>
+                <div class="col-4">
+                    <label class="form-label">Estado</label>
+                    <input asp-for="Estado" class="form-control" maxlength="2" placeholder="SP" required />
+                </div>
+                <div class="col-12">
+                    <label class="form-label">CEP</label>
+                    <input asp-for="Cep" class="form-control" placeholder="00000-000" required />
+                </div>
+                <div class="col-12 form-check ms-1">
+                    <input asp-for="Principal" class="form-check-input" type="checkbox" />
+                    <label asp-for="Principal" class="form-check-label">Definir como endereço principal</label>
+                </div>
+            </div>
+            <div class="d-flex gap-2 mt-4">
+                <button type="submit" class="btn btn-primary rounded-pill flex-grow-1">Salvar</button>
+                <a asp-action="Index" class="btn btn-outline-secondary rounded-pill flex-grow-1">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
