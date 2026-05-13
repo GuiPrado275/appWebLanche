@@ -9,7 +9,6 @@
         <h2>Minha Conta</h2>
     </div>
 
-    @* Abas de gerenciar a conta *@
     <ul class="nav nav-tabs mt-4">
         <li class="nav-item">
             <a class="nav-link @(abaAtiva == "senha" ? "active" : "")"
@@ -42,12 +41,14 @@
 
                 <div class="mb-3">
                     <label class="form-label">Nova Senha</label>
-                    <input asp-for="NovaSenha" id="novaSenha" type="password" class="form-control" placeholder="Mínimo 6 caracteres" required />
+                    <input asp-for="NovaSenha" id="novaSenha" type="password" class="form-control"
+                           placeholder="Mínimo 6 caracteres" minlength="6" required />
                 </div>
 
                 <div class="mb-4">
                     <label class="form-label">Confirmar Nova Senha</label>
-                    <input asp-for="ConfirmarSenha" id="confirmarNovaSenha" type="password" class="form-control" placeholder="Repita a nova senha" required />
+                    <input asp-for="ConfirmarSenha" id="confirmarNovaSenha" type="password" class="form-control"
+                           placeholder="Repita a nova senha" minlength="6" required />
                     <div id="senhaErro" class="text-danger mt-1" style="display:none;">As senhas não coincidem.</div>
                 </div>
 
@@ -69,8 +70,7 @@
 
             <div class="danger-zone mt-3">
                 <form method="post" asp-controller="Usuarios" asp-action="ApagarPropriaConta"
-                      onsubmit="return confirm('Tem certeza que deseja apagar sua conta? Esta ação é irreversível. ' +
-                       'SE VOCÊ FOR UM ADM A CONTA NÃO SERÁ APAGADA E VOCÊ IRÁ SER REDIRECIONADO PARA A PAGINA INICIAL')">
+                      onsubmit="return confirm('Tem certeza que deseja apagar sua conta? Esta ação é irreversível.')">
                     <button type="submit" class="btn btn-danger rounded-pill">Apagar minha conta</button>
                 </form>
             </div>
@@ -78,3 +78,24 @@
 
     </div>
 </div>
+
+<script>
+    function validarNovaSenha() {
+        var nova = document.getElementById('novaSenha').value;
+        var confirmar = document.getElementById('confirmarNovaSenha').value;
+        var erro = document.getElementById('senhaErro');
+
+        if (nova.length < 6) {
+            alert('A nova senha deve ter no mínimo 6 caracteres.');
+            return false;
+        }
+
+        if (nova !== confirmar) {
+            erro.style.display = 'block';
+            return false;
+        }
+
+        erro.style.display = 'none';
+        return true;
+    }
+</script>

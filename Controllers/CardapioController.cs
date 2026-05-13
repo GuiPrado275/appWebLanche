@@ -36,6 +36,10 @@ public class CardapioController : Controller
         if (!Autenticado()) return RedirectToAction("Login", "Auth");
         if (!EhAdmin()) return RedirectToAction("Index");
 
+        // CORREÇÃO: valida os dados antes de salvar
+        if (!ModelState.IsValid)
+            return View(item);
+
         _context.Cardapio.Add(item);
         _context.SaveChanges();
         TempData["Sucesso"] = "Item adicionado ao cardápio!";
@@ -59,6 +63,10 @@ public class CardapioController : Controller
     {
         if (!Autenticado()) return RedirectToAction("Login", "Auth");
         if (!EhAdmin()) return RedirectToAction("Index");
+
+        // CORREÇÃO: valida os dados antes de salvar
+        if (!ModelState.IsValid)
+            return View(item);
 
         var existente = _context.Cardapio.FirstOrDefault(i => i.Id == item.Id);
         if (existente == null) return NotFound();

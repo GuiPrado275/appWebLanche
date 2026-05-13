@@ -39,7 +39,7 @@ public class AvaliacoesController : Controller
         var pedido = _context.Pedidos.FirstOrDefault(p => p.Id == pedidoId && p.UsuarioId == uid && p.Status == "Entregue");
         if (pedido == null)
         {
-            TempData["Erro"] = "Só é possível avaliar pedidos já entregues.";
+            TempData["Erro"] = "Somente clientes podem avaliar pedidos, e pedidos entregues.";
             return RedirectToAction("Index", "Pedidos");
         }
 
@@ -61,7 +61,31 @@ public class AvaliacoesController : Controller
     {
         if (!Autenticado()) return RedirectToAction("Login", "Auth");
 
-        avaliacao.UsuarioId = UsuarioId();
+        var uid = UsuarioId();
+
+        // CORREÇÃO: revalida no POST que o pedido pertence ao usuário logado
+        // e que está com status "Entregue", impedindo que alguém envie um POST
+        // forjado avaliando pedido de outra pessoa
+        var pedido = _context.Pedidos.FirstOrDefault(p =>
+            p.Id == avaliacao.PedidoId &&
+            p.UsuarioId == uid &&
+            p.Status == "Entregue");
+
+        if (pedido == null)
+        {
+            TempData["Erro"] = "Pedido inválido para avaliação.";
+            return RedirectToAction("Index", "Pedidos");
+        }
+
+        // Verifica se já avaliou (evita duplicatas via POST duplo)
+        var jaAvaliou = _context.Avaliacoes.Any(a => a.PedidoId == avaliacao.PedidoId && a.UsuarioId == uid);
+        if (jaAvaliou)
+        {
+            TempData["Erro"] = "Você já avaliou este pedido.";
+            return RedirectToAction("Index", "Pedidos");
+        }
+
+        avaliacao.UsuarioId = uid;
         avaliacao.DataAvaliacao = DateTime.Now;
 
         _context.Avaliacoes.Add(avaliacao);
@@ -71,7 +95,7 @@ public class AvaliacoesController : Controller
         return RedirectToAction("Index");
     }
 
-    // POST: /Avaliacoes/Apagar — Somente Admin 
+    // POST: /Avaliacoes/Apagar — Somente Admin
     [HttpPost]
     public IActionResult Apagar(int id)
     {

@@ -13,6 +13,7 @@ public class PedidosController : Controller
     private bool Autenticado() => HttpContext.Session.GetString("UsuarioId") != null;
     private bool EhAdmin() => HttpContext.Session.GetString("PerfilUsuario") == "Admin";
     private bool EhFuncionario() => HttpContext.Session.GetString("PerfilUsuario") == "Funcionario";
+    private bool EhCliente() => HttpContext.Session.GetString("PerfilUsuario") == "Cliente";
     private string UsuarioId() => HttpContext.Session.GetString("UsuarioId")!;
 
     // GET: /Pedidos — Admin e Funcionário vêem todos; Cliente vê os seus
@@ -43,10 +44,17 @@ public class PedidosController : Controller
         return View(pedidos);
     }
 
-    // GET: /Pedidos/Registrar — monta a tela com cardápio + endereços do usuário
+    // GET: /Pedidos/Registrar — somente Cliente
     public IActionResult Registrar()
     {
         if (!Autenticado()) return RedirectToAction("Login", "Auth");
+
+        // CORREÇÃO: Admin e Funcionário não podem fazer pedidos
+        if (!EhCliente())
+        {
+            TempData["Erro"] = "Apenas clientes podem registrar pedidos.";
+            return RedirectToAction("Index");
+        }
 
         var id = UsuarioId();
         var vm = new RegistrarPedidoViewModel
@@ -57,11 +65,18 @@ public class PedidosController : Controller
         return View(vm);
     }
 
-    // POST: /Pedidos/Registrar — cria o pedido e desconta o estoque
+    // POST: /Pedidos/Registrar — somente Cliente
     [HttpPost]
     public IActionResult Registrar(int? enderecoId, Dictionary<int, int> quantidades, string? observacoes)
     {
         if (!Autenticado()) return RedirectToAction("Login", "Auth");
+
+        // CORREÇÃO: Admin e Funcionário não podem fazer pedidos
+        if (!EhCliente())
+        {
+            TempData["Erro"] = "Apenas clientes podem registrar pedidos.";
+            return RedirectToAction("Index");
+        }
 
         // Filtra apenas os itens com quantidade > 0
         var itensSelecionados = quantidades.Where(q => q.Value > 0).ToList();
@@ -140,7 +155,7 @@ public class PedidosController : Controller
         pedido.MetodoPagamento = vm.MetodoPagamento;
         // Simula aprovação (em produção integraria com gateway de pagamento)
         pedido.StatusPagamento = "Aprovado";
-        pedido.Status = "Preparando";
+        pedido.Status = "Aguardando";
         _context.SaveChanges();
 
         return RedirectToAction("Acompanhar", new { id = pedido.Id });
@@ -199,7 +214,7 @@ public class PedidosController : Controller
         return RedirectToAction("Index");
     }
 
-    // POST: /Pedidos/AtualizarStatus — somente Admin
+    // POST: /Pedidos/AtualizarStatus — somente Admin e Funcionário
     [HttpPost]
     public IActionResult AtualizarStatus(int id, string status)
     {

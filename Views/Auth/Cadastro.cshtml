@@ -27,12 +27,14 @@
 
             <div class="mb-3">
                 <label class="form-label">Senha</label>
-                <input asp-for="Senha" id="senha" type="password" class="form-control" placeholder="Mínimo 6 caracteres" required />
+                <input asp-for="Senha" id="senha" type="password" class="form-control"
+                       placeholder="Mínimo 6 caracteres" minlength="6" required />
             </div>
 
             <div class="mb-4">
                 <label class="form-label">Confirmar Senha</label>
-                <input id="confirmarSenha" type="password" class="form-control" placeholder="Repita a senha" required />
+                <input id="confirmarSenha" type="password" class="form-control"
+                       placeholder="Repita a senha" minlength="6" required />
                 <div id="senhaErro" class="text-danger mt-1" style="display:none; font-size:.82rem">As senhas não coincidem.</div>
             </div>
 
@@ -45,3 +47,24 @@
         </p>
     </div>
 </div>
+
+<script>
+    function validarSenhas() {
+        var senha = document.getElementById('senha').value;
+        var confirmar = document.getElementById('confirmarSenha').value;
+        var erro = document.getElementById('senhaErro');
+
+        if (senha.length < 6) {
+            alert('A senha deve ter no mínimo 6 caracteres.');
+            return false;
+        }
+
+        if (senha !== confirmar) {
+            erro.style.display = 'block';
+            return false;
+        }
+
+        erro.style.display = 'none';
+        return true;
+    }
+</script>

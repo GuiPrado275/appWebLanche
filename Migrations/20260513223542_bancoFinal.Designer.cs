@@ -12,8 +12,8 @@ using SaoJudasLanches.Web.Data;
 namespace SaoJudasLanches.Web.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260512213824_bancoPronto")]
-    partial class bancoPronto
+    [Migration("20260513223542_bancoFinal")]
+    partial class bancoFinal
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -121,8 +121,8 @@ namespace SaoJudasLanches.Web.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Descricao")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<bool>("Disponivel")
                         .HasColumnType("bit");
@@ -132,7 +132,8 @@ namespace SaoJudasLanches.Web.Migrations
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<decimal>("Preco")
                         .HasColumnType("decimal(18,2)");

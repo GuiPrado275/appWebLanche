@@ -16,6 +16,11 @@ public class AuthController : Controller
     // GET: /Auth/Login - Entrar na página de login
     public IActionResult Login()
     {
+        // Impede cache do browser nas páginas de login/logout
+        Response.Headers["Cache-Control"] = "no-store, no-cache, must-revalidate";
+        Response.Headers["Pragma"] = "no-cache";
+        Response.Headers["Expires"] = "0";
+
         if (HttpContext.Session.GetString("UsuarioId") != null)
             return RedirectToAction("Index", "Home");
 
@@ -59,6 +64,12 @@ public class AuthController : Controller
             return View(usuario);
         }
 
+        if (string.IsNullOrEmpty(usuario.Senha) || usuario.Senha.Length < 6)
+        {
+            ViewBag.Erro = "A senha deve ter no mínimo 6 caracteres.";
+            return View(usuario);
+        }
+
         usuario.Id = Guid.NewGuid().ToString();
         usuario.Perfil = "Cliente";
         _context.Usuarios.Add(usuario);
@@ -71,6 +82,12 @@ public class AuthController : Controller
     public IActionResult Logout()
     {
         HttpContext.Session.Clear();
+
+        // Instrui o browser a não guardar cache das páginas visitadas
+        Response.Headers["Cache-Control"] = "no-store, no-cache, must-revalidate";
+        Response.Headers["Pragma"] = "no-cache";
+        Response.Headers["Expires"] = "0";
+
         return RedirectToAction("Login");
     }
 }

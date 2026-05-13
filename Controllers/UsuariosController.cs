@@ -13,10 +13,10 @@ public class UsuariosController : Controller
         _context = context;
     }
 
-    private bool Autenticado() => HttpContext.Session.GetString("UsuarioId") != null; //ver se o user está logado
-    private bool EhAdmin() => HttpContext.Session.GetString("PerfilUsuario") == "Admin"; //verrificar se é adm
+    private bool Autenticado() => HttpContext.Session.GetString("UsuarioId") != null;
+    private bool EhAdmin() => HttpContext.Session.GetString("PerfilUsuario") == "Admin";
 
-    // GET: /Usuarios - busca os usuários só pro adm, se estiver autenticado e for adm
+    // GET: /Usuarios
     public IActionResult Index()
     {
         if (!Autenticado()) return RedirectToAction("Login", "Auth");
@@ -26,7 +26,7 @@ public class UsuariosController : Controller
         return View(usuarios);
     }
 
-    // GET: /Usuarios/AlterarSenha - Abre a pagina de alterar senha, se estiver logado
+    // GET: /Usuarios/AlterarSenha
     public IActionResult AlterarSenha(string aba = "senha")
     {
         if (!Autenticado()) return RedirectToAction("Login", "Auth");
@@ -34,7 +34,7 @@ public class UsuariosController : Controller
         return View();
     }
 
-    // POST: /Usuarios/AlterarSenha - Método para alterar a senha
+    // POST: /Usuarios/AlterarSenha
     [HttpPost]
     public IActionResult AlterarSenha(AlterarSenhaViewModel model)
     {
@@ -57,6 +57,12 @@ public class UsuariosController : Controller
             return View(model);
         }
 
+        if (model.NovaSenha.Length < 6)
+        {
+            ViewBag.Erro = "A nova senha deve ter no mínimo 6 caracteres.";
+            return View(model);
+        }
+
         if (model.NovaSenha != model.ConfirmarSenha)
         {
             ViewBag.Erro = "A nova senha e a confirmação não coincidem.";
@@ -70,12 +76,12 @@ public class UsuariosController : Controller
         return View();
     }
 
-    // POST: /Usuarios/ApagarPropriaConta - Método para apagar a conta
+    // POST: /Usuarios/ApagarPropriaConta
     [HttpPost]
     public IActionResult ApagarPropriaConta()
     {
         if (!Autenticado()) return RedirectToAction("Login", "Auth");
-		if (EhAdmin()) return RedirectToAction("Index", "Home");
+        if (EhAdmin()) return RedirectToAction("Index", "Home");
 
         var id = HttpContext.Session.GetString("UsuarioId");
         var usuario = _context.Usuarios.FirstOrDefault(u => u.Id == id);
@@ -94,7 +100,7 @@ public class UsuariosController : Controller
         return RedirectToAction("Login", "Auth");
     }
 
-    // GET: /Usuarios/Editar/{id} - Ao clicar em editar, o método verifica se é adm e se for direciona para a página
+    // GET: /Usuarios/Editar/{id}
     public IActionResult Editar(string id)
     {
         if (!Autenticado()) return RedirectToAction("Login", "Auth");
@@ -106,7 +112,7 @@ public class UsuariosController : Controller
         return View(usuario);
     }
 
-    // POST: /Usuarios/Editar - Método pro adm editar os users
+    // POST: /Usuarios/Editar
     [HttpPost]
     public IActionResult Editar(Usuario usuario)
     {
@@ -116,15 +122,30 @@ public class UsuariosController : Controller
         var existente = _context.Usuarios.FirstOrDefault(u => u.Id == usuario.Id);
         if (existente == null) return NotFound();
 
+        var idLogado = HttpContext.Session.GetString("UsuarioId");
+
         existente.Nome = usuario.Nome;
         existente.Email = usuario.Email;
-        existente.Perfil = usuario.Perfil;
+
+        // Admin não pode alterar o próprio perfil, e ninguém pode promover alguém a Admin
+        if (existente.Id == idLogado)
+        {
+            // Ignora qualquer alteração de perfil no próprio usuário
+            existente.Perfil = "Admin";
+        }
+        else
+        {
+            // Só permite Cliente ou Funcionario — bloqueia Admin mesmo se forçado via POST
+            if (usuario.Perfil == "Cliente" || usuario.Perfil == "Funcionario")
+                existente.Perfil = usuario.Perfil;
+        }
+
         _context.SaveChanges();
 
         return RedirectToAction("Index");
     }
 
-    // POST: /Usuarios/Apagar - Método pro adm apagar os users
+    // POST: /Usuarios/Apagar
     [HttpPost]
     public IActionResult Apagar(string id)
     {

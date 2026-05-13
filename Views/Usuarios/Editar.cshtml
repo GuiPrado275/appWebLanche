@@ -1,6 +1,8 @@
 @model Usuario
 @{
     ViewData["Title"] = "Editar Usuário - São Judas Lanches";
+    var idLogado = Context.Session.GetString("UsuarioId");
+    var ehElePropio = Model.Id == idLogado;
 }
 
 <div class="container py-4" style="max-width: 500px;">
@@ -25,11 +27,20 @@
 
             <div class="mb-4">
                 <label class="form-label">Perfil</label>
-                <select asp-for="Perfil" class="form-select" required>
-                    <option value="Cliente">Cliente</option>
-                    <option value="Funcionario">Funcionário</option>
-                    <option value="Admin">Admin</option>
-                </select>
+                @if (ehElePropio)
+                {
+                    // Admin não pode alterar o próprio perfil
+                    <input type="hidden" asp-for="Perfil" />
+                    <input class="form-control" value="Admin" disabled />
+                    <small class="text-muted">Você não pode alterar o seu próprio perfil.</small>
+                }
+                else
+                {
+                    <select asp-for="Perfil" class="form-select" required>
+                        <option value="Cliente">Cliente</option>
+                        <option value="Funcionario">Funcionário</option>
+                    </select>
+                }
             </div>
 
             <div class="d-flex gap-2">

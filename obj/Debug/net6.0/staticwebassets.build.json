@@ -1,1 +1,71 @@
-{"Version":1,"Hash":"1pNfwUvlEw4+TigBfAgIrKMOgIkwYYGSl/2TL0AiJic=","Source":"SaoJudasLanches.Web","BasePath":"/","Mode":"Root","ManifestType":"Build","ReferencedProjectsConfiguration":[],"DiscoveryPatterns":[{"Name":"SaoJudasLanches.Web\\wwwroot","Source":"SaoJudasLanches.Web","ContentRoot":"C:\\Users\\Guilherme\\Downloads\\SaoJudasLanchesFull\\SaoJudasLanches.Web\\wwwroot\\","BasePath":"/","Pattern":"**"}],"Assets":[{"Identity":"C:\\Users\\Guilherme\\Downloads\\SaoJudasLanchesFull\\SaoJudasLanches.Web\\wwwroot\\css\\style.css","SourceId":"SaoJudasLanches.Web","SourceType":"Discovered","ContentRoot":"C:\\Users\\Guilherme\\Downloads\\SaoJudasLanchesFull\\SaoJudasLanches.Web\\wwwroot\\","BasePath":"/","RelativePath":"css/style#[.{fingerprint}]?.css","AssetKind":"All","AssetMode":"All","AssetRole":"Primary","AssetMergeBehavior":"","AssetMergeSource":"","RelatedAsset":"","AssetTraitName":"","AssetTraitValue":"","Fingerprint":"w1vawazfm9","Integrity":"TMwaK5HHsOCLxKUFe7NvSfhWCjBAspiw6+ro2z4k1Js=","CopyToOutputDirectory":"Never","CopyToPublishDirectory":"PreserveNewest","OriginalItemSpec":"wwwroot\\css\\style.css","FileLength":28020,"LastWriteTime":"2026-05-12T22:06:25+00:00"},{"Identity":"C:\\Users\\Guilherme\\Downloads\\SaoJudasLanchesFull\\SaoJudasLanches.Web\\wwwroot\\images\\logo-saojudas.png","SourceId":"SaoJudasLanches.Web","SourceType":"Discovered","ContentRoot":"C:\\Users\\Guilherme\\Downloads\\SaoJudasLanchesFull\\SaoJudasLanches.Web\\wwwroot\\","BasePath":"/","RelativePath":"images/logo-saojudas#[.{fingerprint}]?.png","AssetKind":"All","AssetMode":"All","AssetRole":"Primary","AssetMergeBehavior":"","AssetMergeSource":"","RelatedAsset":"","AssetTraitName":"","AssetTraitValue":"","Fingerprint":"4zty81sm64","Integrity":"QLjFNWexdAFycM5Pj0yAD991sGSm2pKJVb7lPwzQ09A=","CopyToOutputDirectory":"Never","CopyToPublishDirectory":"PreserveNewest","OriginalItemSpec":"wwwroot\\images\\logo-saojudas.png","FileLength":226797,"LastWriteTime":"2026-05-12T21:54:35+00:00"},{"Identity":"C:\\Users\\Guilherme\\Downloads\\SaoJudasLanchesFull\\SaoJudasLanches.Web\\wwwroot\\js\\script.js","SourceId":"SaoJudasLanches.Web","SourceType":"Discovered","ContentRoot":"C:\\Users\\Guilherme\\Downloads\\SaoJudasLanchesFull\\SaoJudasLanches.Web\\wwwroot\\","BasePath":"/","RelativePath":"js/script#[.{fingerprint}]?.js","AssetKind":"All","AssetMode":"All","AssetRole":"Primary","AssetMergeBehavior":"","AssetMergeSource":"","RelatedAsset":"","AssetTraitName":"","AssetTraitValue":"","Fingerprint":"oxyj3qtx63","Integrity":"nNJMSfZcUMAhB8padEhqA+6kapqOmfYNfJ9Yow+Eo2g=","CopyToOutputDirectory":"Never","CopyToPublishDirectory":"PreserveNewest","OriginalItemSpec":"wwwroot\\js\\script.js","FileLength":1157,"LastWriteTime":"2026-05-12T19:18:56+00:00"}],"Endpoints":[{"Route":"css/style.css","AssetFile":"C:\\Users\\Guilherme\\Downloads\\SaoJudasLanchesFull\\SaoJudasLanches.Web\\wwwroot\\css\\style.css","Selectors":[],"ResponseHeaders":[{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"28020"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\"TMwaK5HHsOCLxKUFe7NvSfhWCjBAspiw6+ro2z4k1Js=\""},{"Name":"Last-Modified","Value":"Tue, 12 May 2026 22:06:25 GMT"}],"EndpointProperties":[{"Name":"integrity","Value":"sha256-TMwaK5HHsOCLxKUFe7NvSfhWCjBAspiw6+ro2z4k1Js="}]},{"Route":"css/style.w1vawazfm9.css","AssetFile":"C:\\Users\\Guilherme\\Downloads\\SaoJudasLanchesFull\\SaoJudasLanches.Web\\wwwroot\\css\\style.css","Selectors":[],"ResponseHeaders":[{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"28020"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\"TMwaK5HHsOCLxKUFe7NvSfhWCjBAspiw6+ro2z4k1Js=\""},{"Name":"Last-Modified","Value":"Tue, 12 May 2026 22:06:25 GMT"}],"EndpointProperties":[{"Name":"fingerprint","Value":"w1vawazfm9"},{"Name":"integrity","Value":"sha256-TMwaK5HHsOCLxKUFe7NvSfhWCjBAspiw6+ro2z4k1Js="},{"Name":"label","Value":"css/style.css"}]},{"Route":"images/logo-saojudas.4zty81sm64.png","AssetFile":"C:\\Users\\Guilherme\\Downloads\\SaoJudasLanchesFull\\SaoJudasLanches.Web\\wwwroot\\images\\logo-saojudas.png","Selectors":[],"ResponseHeaders":[{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"226797"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\"QLjFNWexdAFycM5Pj0yAD991sGSm2pKJVb7lPwzQ09A=\""},{"Name":"Last-Modified","Value":"Tue, 12 May 2026 21:54:35 GMT"}],"EndpointProperties":[{"Name":"fingerprint","Value":"4zty81sm64"},{"Name":"integrity","Value":"sha256-QLjFNWexdAFycM5Pj0yAD991sGSm2pKJVb7lPwzQ09A="},{"Name":"label","Value":"images/logo-saojudas.png"}]},{"Route":"images/logo-saojudas.png","AssetFile":"C:\\Users\\Guilherme\\Downloads\\SaoJudasLanchesFull\\SaoJudasLanches.Web\\wwwroot\\images\\logo-saojudas.png","Selectors":[],"ResponseHeaders":[{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"226797"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\"QLjFNWexdAFycM5Pj0yAD991sGSm2pKJVb7lPwzQ09A=\""},{"Name":"Last-Modified","Value":"Tue, 12 May 2026 21:54:35 GMT"}],"EndpointProperties":[{"Name":"integrity","Value":"sha256-QLjFNWexdAFycM5Pj0yAD991sGSm2pKJVb7lPwzQ09A="}]},{"Route":"js/script.js","AssetFile":"C:\\Users\\Guilherme\\Downloads\\SaoJudasLanchesFull\\SaoJudasLanches.Web\\wwwroot\\js\\script.js","Selectors":[],"ResponseHeaders":[{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"1157"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\"nNJMSfZcUMAhB8padEhqA+6kapqOmfYNfJ9Yow+Eo2g=\""},{"Name":"Last-Modified","Value":"Tue, 12 May 2026 19:18:56 GMT"}],"EndpointProperties":[{"Name":"integrity","Value":"sha256-nNJMSfZcUMAhB8padEhqA+6kapqOmfYNfJ9Yow+Eo2g="}]},{"Route":"js/script.oxyj3qtx63.js","AssetFile":"C:\\Users\\Guilherme\\Downloads\\SaoJudasLanchesFull\\SaoJudasLanches.Web\\wwwroot\\js\\script.js","Selectors":[],"ResponseHeaders":[{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1157"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\"nNJMSfZcUMAhB8padEhqA+6kapqOmfYNfJ9Yow+Eo2g=\""},{"Name":"Last-Modified","Value":"Tue, 12 May 2026 19:18:56 GMT"}],"EndpointProperties":[{"Name":"fingerprint","Value":"oxyj3qtx63"},{"Name":"integrity","Value":"sha256-nNJMSfZcUMAhB8padEhqA+6kapqOmfYNfJ9Yow+Eo2g="},{"Name":"label","Value":"js/script.js"}]}]}
+{
+  "Version": 1,
+  "Hash": "Tad6HmaQQhN42AelgjS/1nEDpuXkssgHALyhMRZNnqU=",
+  "Source": "SaoJudasLanches.Web",
+  "BasePath": "_content/SaoJudasLanches.Web",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "SaoJudasLanches.Web\\wwwroot",
+      "Source": "SaoJudasLanches.Web",
+      "ContentRoot": "C:\\Users\\Guilherme\\Downloads\\SaoJudasLanches\\SaoJudasLanches.Web\\wwwroot\\",
+      "BasePath": "_content/SaoJudasLanches.Web",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\Guilherme\\Downloads\\SaoJudasLanches\\SaoJudasLanches.Web\\wwwroot\\css\\style.css",
+      "SourceId": "SaoJudasLanches.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Guilherme\\Downloads\\SaoJudasLanches\\SaoJudasLanches.Web\\wwwroot\\",
+      "BasePath": "_content/SaoJudasLanches.Web",
+      "RelativePath": "css/style.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\style.css"
+    },
+    {
+      "Identity": "C:\\Users\\Guilherme\\Downloads\\SaoJudasLanches\\SaoJudasLanches.Web\\wwwroot\\images\\logo-saojudas.png",
+      "SourceId": "SaoJudasLanches.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Guilherme\\Downloads\\SaoJudasLanches\\SaoJudasLanches.Web\\wwwroot\\",
+      "BasePath": "_content/SaoJudasLanches.Web",
+      "RelativePath": "images/logo-saojudas.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\logo-saojudas.png"
+    },
+    {
+      "Identity": "C:\\Users\\Guilherme\\Downloads\\SaoJudasLanches\\SaoJudasLanches.Web\\wwwroot\\js\\script.js",
+      "SourceId": "SaoJudasLanches.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Guilherme\\Downloads\\SaoJudasLanches\\SaoJudasLanches.Web\\wwwroot\\",
+      "BasePath": "_content/SaoJudasLanches.Web",
+      "RelativePath": "js/script.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\script.js"
+    }
+  ]
+}

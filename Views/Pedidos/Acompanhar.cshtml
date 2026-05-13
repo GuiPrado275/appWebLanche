@@ -47,6 +47,7 @@
                     {
                         @Model.MetodoPagamento
                         <span class="badge @(Model.StatusPagamento == "Aprovado" ? "bg-success" : "bg-warning text-dark") ms-1" style="font-size:0.7rem">@Model.StatusPagamento</span>
+                        <small class="text-muted ms-1">(pago na entrega)</small>
                     }
                     else
                     {
@@ -59,7 +60,9 @@
                 <span>
                     @if (Model.Endereco != null)
                     {
-                        @($"{Model.Endereco.Rua}, {Model.Endereco.Numero} — {Model.Endereco.Bairro}")
+                        var complemento = !string.IsNullOrWhiteSpace(Model.Endereco.Complemento)
+                            ? $" — {Model.Endereco.Complemento}" : "";
+                        @($"{Model.Endereco.Rua}, {Model.Endereco.Numero}{complemento} — {Model.Endereco.Bairro}, {Model.Endereco.Cidade} - {Model.Endereco.Estado}, CEP {Model.Endereco.Cep}")
                     }
                     else
                     {
@@ -93,7 +96,7 @@
         </div>
     </div>
 
-    @if (Model.Status == "Entregue")
+    @if (Model.Status == "Entregue" && perfil == "Cliente")
     {
         <div class="text-center mt-3">
             <a asp-controller="Avaliacoes" asp-action="Criar" asp-route-pedidoId="@Model.Id"
