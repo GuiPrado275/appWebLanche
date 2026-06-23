@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-AppWeb em .NET para facilitar as vendas de uma lanchonete, moradores ao redor da lanchonete, dificuldade de manter a organização em momentos de pico, vai métodos CRUD, funções para comprar.
-Inicialmente com um crud
-=======
 # 🍔 São Judas Lanches
 
 Sistema web de pedidos para lanchonete, desenvolvido em **ASP.NET Core MVC (.NET 6)**. A aplicação resolve um problema real de pequenos estabelecimentos: a dificuldade de manter a organização dos pedidos em momentos de pico, substituindo o controle manual por um fluxo digital completo — do cadastro do cliente até a entrega do pedido — com três níveis de permissão (Cliente, Funcionário e Administrador).
@@ -314,4 +310,3 @@ Criado automaticamente no primeiro startup da aplicação (caso a tabela de usu�
 ## ✍️ Autor
 
 Projeto desenvolvido por **Guilherme**, estudante de Análise e Desenvolvimento de Sistemas (FATEC São José do Rio Preto), como exercício prático de ASP.NET Core MVC, Entity Framework Core e modelagem de regras de negócio com múltiplos perfis de acesso.
->>>>>>> dabab4f (Projeto finalizado)
