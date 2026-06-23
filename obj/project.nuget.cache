@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "lvncg2NLsGk5yIVHK8QPlfI+lOp5fYCwyFgh4jn/qc57Bda+kfAUgz4L8Rze1OAE8BklImuExTacYd5O5/1+zg==",
+  "dgSpecHash": "UZMJJo+hdTYC8nKU692XTsIbIW4r0eqbnC1BDVOTcAlBDpjQEGvZ/FowwOSMLx22X3hysd8fodmktGcdzqjAgQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Guilherme\\Downloads\\SaoJudasLanches\\SaoJudasLanches.Web\\SaoJudasLanches.Web.csproj",
+  "projectFilePath": "C:\\Users\\Guilherme\\Documents\\SaoJudasLanches\\SaoJudasLanches.Web\\SaoJudasLanches.Web.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Guilherme\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Guilherme\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",

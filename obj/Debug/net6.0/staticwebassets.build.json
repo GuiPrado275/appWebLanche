@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Tad6HmaQQhN42AelgjS/1nEDpuXkssgHALyhMRZNnqU=",
+  "Hash": "ugy85OmEE8JK9WF98wWooBA9r3FFMsnobeE9LKwfn/Y=",
   "Source": "SaoJudasLanches.Web",
   "BasePath": "_content/SaoJudasLanches.Web",
   "Mode": "Default",
@@ -10,17 +10,17 @@
     {
       "Name": "SaoJudasLanches.Web\\wwwroot",
       "Source": "SaoJudasLanches.Web",
-      "ContentRoot": "C:\\Users\\Guilherme\\Downloads\\SaoJudasLanches\\SaoJudasLanches.Web\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Guilherme\\Documents\\SaoJudasLanches\\SaoJudasLanches.Web\\wwwroot\\",
       "BasePath": "_content/SaoJudasLanches.Web",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\Guilherme\\Downloads\\SaoJudasLanches\\SaoJudasLanches.Web\\wwwroot\\css\\style.css",
+      "Identity": "C:\\Users\\Guilherme\\Documents\\SaoJudasLanches\\SaoJudasLanches.Web\\wwwroot\\css\\style.css",
       "SourceId": "SaoJudasLanches.Web",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Guilherme\\Downloads\\SaoJudasLanches\\SaoJudasLanches.Web\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Guilherme\\Documents\\SaoJudasLanches\\SaoJudasLanches.Web\\wwwroot\\",
       "BasePath": "_content/SaoJudasLanches.Web",
       "RelativePath": "css/style.css",
       "AssetKind": "All",
@@ -34,10 +34,10 @@
       "OriginalItemSpec": "wwwroot\\css\\style.css"
     },
     {
-      "Identity": "C:\\Users\\Guilherme\\Downloads\\SaoJudasLanches\\SaoJudasLanches.Web\\wwwroot\\images\\logo-saojudas.png",
+      "Identity": "C:\\Users\\Guilherme\\Documents\\SaoJudasLanches\\SaoJudasLanches.Web\\wwwroot\\images\\logo-saojudas.png",
       "SourceId": "SaoJudasLanches.Web",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Guilherme\\Downloads\\SaoJudasLanches\\SaoJudasLanches.Web\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Guilherme\\Documents\\SaoJudasLanches\\SaoJudasLanches.Web\\wwwroot\\",
       "BasePath": "_content/SaoJudasLanches.Web",
       "RelativePath": "images/logo-saojudas.png",
       "AssetKind": "All",
@@ -51,10 +51,10 @@
       "OriginalItemSpec": "wwwroot\\images\\logo-saojudas.png"
     },
     {
-      "Identity": "C:\\Users\\Guilherme\\Downloads\\SaoJudasLanches\\SaoJudasLanches.Web\\wwwroot\\js\\script.js",
+      "Identity": "C:\\Users\\Guilherme\\Documents\\SaoJudasLanches\\SaoJudasLanches.Web\\wwwroot\\js\\script.js",
       "SourceId": "SaoJudasLanches.Web",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Guilherme\\Downloads\\SaoJudasLanches\\SaoJudasLanches.Web\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Guilherme\\Documents\\SaoJudasLanches\\SaoJudasLanches.Web\\wwwroot\\",
       "BasePath": "_content/SaoJudasLanches.Web",
       "RelativePath": "js/script.js",
       "AssetKind": "All",

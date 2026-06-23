@@ -29,7 +29,7 @@
                 <label class="form-label">Perfil</label>
                 @if (ehElePropio)
                 {
-                    // Admin não pode alterar o próprio perfil
+                    // Admin não pode alterar o próprio perfil  
                     <input type="hidden" asp-for="Perfil" />
                     <input class="form-control" value="Admin" disabled />
                     <small class="text-muted">Você não pode alterar o seu próprio perfil.</small>
